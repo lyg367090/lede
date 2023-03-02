@@ -7,14 +7,20 @@
 #
 name: OpenWrt-CI
 
-on:
-  schedule:
-    - cron: 0 20 * * *
+on: 
+  release:
+    types: [published]
+  push:
+    tags:
+    - 'v*'
 
-permissions:
-  contents: read
+  watch:
+    types: [started]
 
 jobs:
+  build:
+    runs-on: ubuntu-18.04
+    if: github.event.repository.owner.id == github.event.sender.id
 
   build_openwrt:
 
